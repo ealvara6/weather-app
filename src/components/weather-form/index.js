@@ -17,7 +17,10 @@ const createWeatherForm = () => {
   const submit = document.createElement('button');
   submit.setAttribute('type', 'submit');
   submit.innerHTML = 'Submit';
-  submit.addEventListener('click', (e) => handleSubmit(e, input.value));
+  submit.addEventListener('click', (e) => {
+    e.preventDefault();
+    handleSubmit(input.value);
+  });
   element.appendChild(submit);
 
   return element;

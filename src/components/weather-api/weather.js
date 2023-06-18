@@ -1,7 +1,5 @@
 import handleError from '../error';
-
-const url = 'http://api.weatherapi.com/v1/current.json?';
-const key = 'ef1e16cd5e194abcb13211412231606';
+import { updateWeatherInfo } from '../weather-info';
 
 class Weather {
   constructor(name, region, country, time) {
@@ -24,20 +22,22 @@ const createWeatherObj = (data) => {
 };
 
 const getWeatherData = async (location) => {
+  const url = 'http://api.weatherapi.com/v1/current.json?';
+  const key = 'ef1e16cd5e194abcb13211412231606';
+
   const response = await fetch(`${url}key=${key}&q=${location}`);
   const weatherData = await response.json();
 
   return weatherData;
 };
 
-const handleSubmit = (e, input) => {
-  e.preventDefault();
+const handleSubmit = (input) => {
   getWeatherData(input).then((data) => {
     if (data.error) {
       handleError(data.error);
     } else {
       const weatherObj = createWeatherObj(data);
-      console.log(weatherObj);
+      updateWeatherInfo(weatherObj);
     }
   });
 };

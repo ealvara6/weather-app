@@ -1,0 +1,1 @@
+background-photo = Photo by paul voie: https://www.pexels.com/photo/clouds-2627945/
