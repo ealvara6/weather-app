@@ -1,5 +1,4 @@
 import './weather-info.scss';
-// import toDate from 'date-fns/toDate';
 import format from 'date-fns/format';
 
 const createInput = (id, value) => {
