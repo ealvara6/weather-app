@@ -1,5 +1,6 @@
-import './weather-info.scss';
+import './current-weather.scss';
 import format from 'date-fns/format';
+import { updateForecastInfo } from '../forecast';
 
 const createInput = (id, value) => {
   const element = document.createElement('div');
@@ -27,7 +28,17 @@ const createTime = (time) => {
   return element;
 };
 
-const locationInfo = (name, region, country, time) => {
+const createTempToggle = (data, forecast) => {
+  const element = document.createElement('button');
+  element.id = 'toggle-temp';
+  element.innerHTML = data.temp.slice(-2);
+
+  element.addEventListener('click', () => handleToggle(data, forecast));
+
+  return element;
+};
+
+const locationInfo = (data, forecast) => {
   let element = document.getElementById('location-info');
 
   if (element !== null) {
@@ -36,11 +47,12 @@ const locationInfo = (name, region, country, time) => {
   element = document.createElement('div');
   element.id = 'location-info';
 
-  element.appendChild(createInput('city', name));
-  element.appendChild(createInput('region', region));
-  element.appendChild(createInput('country', country));
-  element.appendChild(createDate(time));
-  element.appendChild(createTime(time));
+  element.appendChild(createInput('city', data.name));
+  element.appendChild(createInput('region', data.region));
+  element.appendChild(createInput('country', data.country));
+  element.appendChild(createDate(data.time));
+  element.appendChild(createTempToggle(data, forecast));
+  element.appendChild(createTime(data.time));
 
   return element;
 };
@@ -48,7 +60,7 @@ const locationInfo = (name, region, country, time) => {
 const createTemp = (temp) => {
   const element = document.createElement('div');
   element.id = 'temp';
-  element.innerHTML = `${temp}&#176;F`;
+  element.innerHTML = temp;
 
   return element;
 };
@@ -69,7 +81,7 @@ const createCondition = (condition) => {
   return element;
 };
 
-const weatherInfo = (tempF, tempC, condition) => {
+const weatherInfo = (temp, condition) => {
   let element = document.getElementById('weather-info');
 
   if (element !== null) {
@@ -78,17 +90,37 @@ const weatherInfo = (tempF, tempC, condition) => {
   element = document.createElement('div');
   element.id = 'weather-info';
 
-  element.appendChild(createTemp(tempF));
+  element.appendChild(createTemp(temp));
   element.appendChild(createCondition(condition));
 
   return element;
 };
 
-const updateWeatherInfo = (data) => {
+const updateWeatherInfo = (data, forecast) => {
   const container = document.getElementById('container');
 
-  container.appendChild(locationInfo(data.name, data.region, data.country, data.time));
-  container.appendChild(weatherInfo(data.tempF, data.tempC, data.condition));
+  container.appendChild(locationInfo(data, forecast));
+  container.appendChild(weatherInfo(data.temp, data.condition));
+};
+
+const handleToggle = (data, forecast) => {
+  const tempData = data;
+  const tempForecast = forecast;
+  if (data.isTempC) {
+    tempData.temp = false;
+    tempForecast.forEach((day) => {
+      const tempDay = day;
+      tempDay.temp = false;
+    });
+  } else {
+    tempData.temp = true;
+    tempForecast.forEach((day) => {
+      const tempDay = day;
+      tempDay.temp = true;
+    });
+  }
+  updateWeatherInfo(data, forecast);
+  updateForecastInfo(forecast);
 };
 
 export {

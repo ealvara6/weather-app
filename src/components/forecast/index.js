@@ -3,7 +3,7 @@ import format from 'date-fns/format';
 const createTemp = (temp) => {
   const element = document.createElement('div');
   element.classList.add('forecast-temp');
-  element.innerHTML = `${temp}°F`;
+  element.innerHTML = `${temp}`;
 
   return element;
 };
@@ -39,7 +39,7 @@ const createDayInfo = (day) => {
   element.classList.add('day');
 
   element.appendChild(createDate(day.date));
-  element.appendChild(createTemp(day.avgTempF));
+  element.appendChild(createTemp(day.temp));
   element.appendChild(createCondition(day.condition));
 
   return element;

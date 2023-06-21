@@ -1,9 +1,10 @@
 import './assets/styles/styles.scss';
 import createWeatherForm from './components/weather-form';
-import { locationInfo, weatherInfo } from './components/weather-info';
-import { getWeatherData, Weather } from './components/weather-api/weather';
+import { locationInfo, weatherInfo } from './components/current-weather';
+import getWeatherData from './components/weather-api/weather';
 import { forecastArray } from './components/forecast/forecast';
 import { forecastInfo } from './components/forecast';
+import CurrentWeather from './components/current-weather/currentWeather';
 
 const component = () => {
   const element = document.createElement('div');
@@ -13,13 +14,12 @@ const component = () => {
   element.appendChild(weatherForm);
 
   getWeatherData('houston').then((data) => {
-    console.log(data);
-    const obj = new Weather(data);
+    const obj = new CurrentWeather(data);
 
     const forecast = forecastArray(data.forecast.forecastday);
 
-    element.appendChild(locationInfo(obj.name, obj.region, obj.country, obj.time));
-    element.appendChild(weatherInfo(obj.tempF, obj.tempC, obj.condition));
+    element.appendChild(locationInfo(obj, forecast));
+    element.appendChild(weatherInfo(obj.temp, obj.condition));
     element.appendChild(forecastInfo(forecast));
   });
 

@@ -2,8 +2,20 @@ class Forecast {
   constructor(data) {
     this.date = data.date;
     this.condition = data.day.condition;
-    this.avgTempF = data.day.avgtemp_f;
-    this.avgTempC = data.day.avgtemp_c;
+    this.avgTempF = `${data.day.avgtemp_f}°F`;
+    this.avgTempC = `${data.day.avgtemp_c}°C`;
+    this.isTempC = false;
+  }
+
+  get temp() {
+    if (this.isTempC) {
+      return this.avgTempC;
+    }
+    return this.avgTempF;
+  }
+
+  set temp(value) {
+    this.isTempC = value;
   }
 }
 

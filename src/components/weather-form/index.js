@@ -1,4 +1,23 @@
-import { handleSubmit } from '../weather-api/weather';
+import handleError from '../error';
+import CurrentWeather from '../current-weather/currentWeather';
+import { updateForecastInfo } from '../forecast';
+import { forecastArray } from '../forecast/forecast';
+import { updateWeatherInfo } from '../current-weather';
+import getWeatherData from '../weather-api/weather';
+
+const handleSubmit = (input) => {
+  getWeatherData(input).then((data) => {
+    if (data.error) {
+      handleError(data.error);
+    } else {
+      const weatherObj = new CurrentWeather(data);
+      const forecast = forecastArray(data.forecast.forecastday);
+      updateWeatherInfo(weatherObj, forecast);
+
+      updateForecastInfo(forecast);
+    }
+  });
+};
 
 const createWeatherForm = () => {
   const element = document.createElement('form');
