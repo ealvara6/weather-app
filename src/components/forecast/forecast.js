@@ -20,6 +20,7 @@ class Forecast {
 }
 
 const forecastArray = (data) => {
+  data.splice(0, 2);
   const forecast = [];
   data.forEach((day) => {
     forecast.push(new Forecast(day));

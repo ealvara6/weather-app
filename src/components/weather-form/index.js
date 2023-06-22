@@ -1,3 +1,4 @@
+import './index.scss';
 import handleError from '../error';
 import CurrentWeather from '../current-weather/currentWeather';
 import { updateForecastInfo } from '../forecast';

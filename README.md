@@ -1,1 +1,1 @@
-background-photo = Photo by paul voie: https://www.pexels.com/photo/clouds-2627945/
+background-photo = Photo by Vladyslav Dushenkovsky: https://www.pexels.com/photo/silhouette-of-mountain-under-the-moon-covered-with-clouds-4100130/
