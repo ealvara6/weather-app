@@ -5,10 +5,14 @@ import { forecastArray } from '../forecast/forecast';
 import { updateWeatherInfo } from '../current-weather';
 import getWeatherData from '../weather-api/weather';
 
-const handleSubmit = (input) => {
+const handleSubmit = (input, error) => {
+  const tempError = error;
+  tempError.innerHTML = '';
+  tempError.setAttribute('display', 'none');
+
   getWeatherData(input).then((data) => {
     if (data.error) {
-      handleError(data.error);
+      handleError(error, 'Enter a valid location');
     } else {
       const weatherObj = new CurrentWeather(data);
       const forecast = forecastArray(data.forecast.forecastday);
@@ -33,12 +37,17 @@ const createWeatherForm = () => {
   input.setAttribute('name', 'weather');
   element.appendChild(input);
 
+  const errorMsg = document.createElement('div');
+  errorMsg.className = 'error';
+  errorMsg.setAttribute('display', 'none');
+  element.appendChild(errorMsg);
+
   const submit = document.createElement('button');
   submit.setAttribute('type', 'submit');
   submit.innerHTML = 'Submit';
   submit.addEventListener('click', (e) => {
     e.preventDefault();
-    handleSubmit(input.value);
+    handleSubmit(input.value, errorMsg);
   });
   element.appendChild(submit);
 

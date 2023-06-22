@@ -30,7 +30,7 @@ body {
 form {
   display: grid;
   grid-template-columns: 1fr min-content;
-  grid-template-rows: min-content 1fr;
+  grid-template-rows: min-content 1fr min-content;
   grid-column: 1 / -1;
   grid-row: 1;
   align-self: center;
@@ -43,6 +43,18 @@ form {
     grid-row: 1;
     justify-self: center;
     font-size: 25px;
+  }
+
+  button {
+    grid-column: 2;
+    grid-row: 2 / 3;
+  }
+
+  .error {
+    grid-column: 1 / -1;
+    grid-row: -1;
+    justify-self: center;
+    color: red;
   }
 }
 
